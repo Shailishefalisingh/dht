@@ -5,10 +5,10 @@ CFLAGS=-c -Wall
 all: client server
 
 client: Socket.o client.o
-	$(CC) Socket.o client.o -o client
+	$(CC) Socket.o client.o -o bin/client
 
 server: Socket.o server.o
-	$(CC) Socket.o server.o -o server
+	$(CC) Socket.o server.o -o bin/server
 
 client.o: 
 	$(CC) $(CFLAGS) client.cpp
