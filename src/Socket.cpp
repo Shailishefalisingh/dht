@@ -88,7 +88,7 @@ void Socket::close() {
 
 int Socket::accept() {
 
-    unsigned int addrlen, new_socket;
+    unsigned int addrlen;
     struct sockaddr_in address;
 
     addrlen = sizeof(struct sockaddr_in);
