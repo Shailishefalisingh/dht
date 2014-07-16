@@ -86,14 +86,11 @@ void Socket::close() {
     ::close(sockfd);
 }
 
-bool Socket::accept() {
-    
+int Socket::accept() {
 
-    unsigned int addrlen;
+    unsigned int addrlen, new_socket;
     struct sockaddr_in address;
 
     addrlen = sizeof(struct sockaddr_in);
-    this->sockfd = ::accept(this->sockfd, (struct sockaddr *)&address, &addrlen);
-
-    return true;
+    return ::accept(this->sockfd, (struct sockaddr *)&address, &addrlen);
 }

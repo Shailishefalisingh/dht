@@ -30,12 +30,10 @@ class Socket {
         /* Recieve size bytes of data into buffer from port that you are listening on. Returns false if fails. */
         bool recv(void * buffer, size_t size);
 
-        bool accept();
+        int accept();
 
         /* close the socket */
         void close();
-
-    private:
 
         int sockfd;
 };
