@@ -20,5 +20,6 @@
 *.out
 *.app
 
-# The bin file
+# obj and bin files
 bin/
+obj/

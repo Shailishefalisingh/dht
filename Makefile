@@ -1,9 +1,9 @@
 
 all:
-    $(MAKE) -C src $@
+	$(MAKE) -C src $@
 
 clean:
-    rm -rf obj
-    rm -rf bin
-    mkdir obj
-    mkdir bin
+	rm -rf obj
+	rm -rf bin
+	mkdir obj
+	mkdir bin
