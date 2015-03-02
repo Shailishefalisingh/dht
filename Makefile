@@ -1,4 +1,6 @@
 
+CC=clang
+
 all: clean
 	$(MAKE) -C src $@
 

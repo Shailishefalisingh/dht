@@ -1,7 +1,7 @@
 
-CC=g++
+CC=clang++
 CFLAGS=-std=c++11 -pthread -Wall
-LFLAGS=
+LFLAGS=-lcurses -lreadline
 
 SRCS:=$(wildcard *.cpp)
 OBJS:=$(patsubst %.cpp,../obj/%.o,$(SRCS))
