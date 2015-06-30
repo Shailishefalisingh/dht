@@ -7,57 +7,57 @@ ClientSocket::ClientSocket() {
 }
 
 bool ClientSocket::connect(const char * addr, const char * port) {
-   
-    int err = 0;
 
-    struct addrinfo hints, *res;
+  int err = 0;
 
-    memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
+  struct addrinfo hints, *res;
 
-    err = getaddrinfo(addr, port, &hints, &res);
+  memset(&hints, 0, sizeof hints);
+  hints.ai_family = AF_INET;
+  hints.ai_socktype = SOCK_STREAM;
+  hints.ai_flags = AI_PASSIVE;
 
-    std::cout << _sock_fd << std::endl;
+  err = getaddrinfo(addr, port, &hints, &res);
 
-    err = ::connect(_sock_fd, res->ai_addr, res->ai_addrlen);
+  std::cout << _sock_fd << std::endl;
 
-    if (err < 0) perror("connect");
+  err = ::connect(_sock_fd, res->ai_addr, res->ai_addrlen);
 
-    freeaddrinfo(res);
+  if (err < 0) perror("connect");
 
-    return err == 0;
+  freeaddrinfo(res);
+
+  return err == 0;
 }
 
 
 bool ClientSocket::send(const void * data, size_t size) {
 
-    char * d = (char*) data;
+  char * d = (char*) data;
 
-    while (size > 0) {
-        int bytes_sent = ::send(_sock_fd, d, size, 0);
-        if (bytes_sent == 0) {
-            return false;
-        }
-        size -= bytes_sent;
+  while (size > 0) {
+    int bytes_sent = ::send(_sock_fd, d, size, 0);
+    if (bytes_sent == 0) {
+      return false;
     }
+    size -= bytes_sent;
+  }
 
-    return true;
+  return true;
 }
 
 
 bool ClientSocket::recv(void * buffer, size_t size) {
 
-    char * b = (char*) buffer;
+  char * b = (char*) buffer;
 
-    int num_bytes = ::recv(_sock_fd, b, size, 0);
+  int num_bytes = ::recv(_sock_fd, b, size, 0);
 
-    if (num_bytes < 0) perror("rec");
+  if (num_bytes < 0) perror("rec");
 
-    b[num_bytes] = '\0';
+  b[num_bytes] = '\0';
 
-    return num_bytes >= 0;
+  return num_bytes >= 0;
 }
 
 bool ClientSocket::valid() {
@@ -65,6 +65,6 @@ bool ClientSocket::valid() {
 }
 
 void ClientSocket::close() {
-    ::close(_sock_fd);
-    _sock_fd = -1;
+  ::close(_sock_fd);
+  _sock_fd = -1;
 }

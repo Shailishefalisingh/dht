@@ -16,17 +16,17 @@
 #include "ServerSocket.hpp"
 
 int main(void) {
-    // start handling incoming connections 
-    ServerSocket s;
-    s.bind("1234");
-    while (true) {
-        ClientSocket sock = s.accept();
-        if (!sock.valid()) {
-            perror("accept()");
-            continue;
-        }
-        // TODO start thread to handle sock
+  // start handling incoming connections 
+  ServerSocket s;
+  s.bind("1234");
+  while (true) {
+    ClientSocket sock = s.accept();
+    if (!sock.valid()) {
+      perror("accept()");
+      continue;
     }
+    // TODO start thread to handle sock
+  }
 
-    return 0;
+  return 0;
 }
