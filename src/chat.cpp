@@ -1,5 +1,6 @@
 
 #include <curses.h>
+#include <string.h>
 #include <readline/readline.h>
 #include <stdlib.h>
 
@@ -21,6 +22,7 @@ int main(void) {
     scrollok(input, TRUE);
     keypad(input, TRUE);
 
+    /* TODO: Start a thread for accepting connections. */
 
     rl_callback_handler_install("", null);
     rl_variable_bind("editing-mode", "vi");

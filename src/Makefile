@@ -1,6 +1,6 @@
 
 CC=clang++
-CFLAGS=-std=c++11 -pthread -Wall
+CFLAGS=-std=c++11 -Wall
 LFLAGS=-lcurses -lreadline
 
 SRCS:=$(wildcard *.cpp)
