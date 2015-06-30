@@ -3,7 +3,7 @@
 #include <iostream>
 
 ClientSocket::ClientSocket() {
-  _sock_fd = socket(AF_INET, SOCK_STREAM, 0);
+  _sock_fd = -1;
 }
 
 bool ClientSocket::connect(const char * addr, const char * port) {
@@ -13,13 +13,12 @@ bool ClientSocket::connect(const char * addr, const char * port) {
   struct addrinfo hints, *res;
 
   memset(&hints, 0, sizeof hints);
-  hints.ai_family = AF_INET;
+  hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
-  hints.ai_flags = AI_PASSIVE;
 
   err = getaddrinfo(addr, port, &hints, &res);
 
-  std::cout << _sock_fd << std::endl;
+  _sock_fd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
 
   err = ::connect(_sock_fd, res->ai_addr, res->ai_addrlen);
 
