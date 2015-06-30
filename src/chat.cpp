@@ -3,8 +3,34 @@
 #include <string.h>
 #include <readline/readline.h>
 #include <stdlib.h>
+#include <thread>
+#include "ServerSocket.hpp"
 
 void null(char* kek) {}
+
+void handle_conn(ClientSocket cs) {
+  char buf[1024];
+  while (1) {
+    if (cs.recv(buf, 1024) <= 0) {
+      cs.close();
+      break;
+    } else {
+      cs.send("Hello", 5);
+    }
+  }
+}
+
+void accept_connections() {
+  ServerSocket s;
+  s.bind("1234");
+  while (true) {
+    ClientSocket cs = s.accept();
+    if (cs.valid()) {
+      std::thread conn_handler(handle_conn, cs);
+      conn_handler.detach();
+    }
+  }
+}
 
 int main(void) {
     initscr();
@@ -22,7 +48,8 @@ int main(void) {
     scrollok(input, TRUE);
     keypad(input, TRUE);
 
-    /* TODO: Start a thread for accepting connections. */
+    std::thread acceptor(accept_connections);
+    acceptor.detach();
 
     rl_callback_handler_install("", null);
     rl_variable_bind("editing-mode", "vi");

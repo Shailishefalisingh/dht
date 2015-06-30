@@ -34,30 +34,29 @@ bool ClientSocket::connect(const char * addr, const char * port) {
 bool ClientSocket::send(const void * data, size_t size) {
 
   char * d = (char*) data;
+  int bytes_sent = 0;
 
-  while (size > 0) {
-    int bytes_sent = ::send(_sock_fd, d, size, 0);
-    if (bytes_sent == 0) {
+  while (bytes_sent < size) {
+    int sent = ::send(_sock_fd, d + bytes_sent, size, 0);
+    if (sent < 1) {
       return false;
     }
-    size -= bytes_sent;
+    bytes_sent += sent;
   }
 
   return true;
 }
 
 
-bool ClientSocket::recv(void * buffer, size_t size) {
+int ClientSocket::recv(void * buffer, size_t size) {
 
   char * b = (char*) buffer;
 
   int num_bytes = ::recv(_sock_fd, b, size, 0);
 
-  if (num_bytes < 0) perror("rec");
+  if (num_bytes < 0) perror("recv");
 
-  b[num_bytes] = '\0';
-
-  return num_bytes >= 0;
+  return num_bytes;
 }
 
 bool ClientSocket::valid() {

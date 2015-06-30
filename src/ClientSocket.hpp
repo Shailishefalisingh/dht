@@ -30,7 +30,7 @@ class ClientSocket {
      * Returns actual amount of bytes recv'd. 
      * Returns -1 on error, 0 on connection closed.
      */
-    bool recv(void * buffer, size_t size);
+    int recv(void * buffer, size_t size);
 
     /* Checks if the socket is valid for using. */
     bool valid();
